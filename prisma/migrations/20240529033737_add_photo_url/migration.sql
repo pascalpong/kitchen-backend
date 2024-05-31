@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE `admin` ADD COLUMN `photoURL` VARCHAR(191) NULL;

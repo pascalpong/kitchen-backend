@@ -1,12 +1,14 @@
 import * as express from 'express';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
+import * as cors from 'cors';
 
 // Load environment variables from .env file
 dotenv.config();
 
 // Create Express app
 const app = express();
+app.use(cors())
 
 // Middleware
 app.use(express.json());

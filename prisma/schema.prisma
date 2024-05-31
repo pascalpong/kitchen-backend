@@ -14,79 +14,87 @@ datasource db {
 }
 
 model Admin {
-  id        Int      @id @default(autoincrement())
-  name  String
-  email String  @unique
-  phone String?
-  details Json?
+  id           Int     @id @default(autoincrement())
+  name         String
+  email        String  @unique
+  phone        String?
+  photoURL     String?
+  details      Json?
+  refreshToken String? @db.Text
+  publicKey    String?
+  secretKey    String?
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime?  @updatedAt
+  updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 
-  Category  Category[]
+  Category Category[]
 }
 
 model Category {
-  id        Int      @id @default(autoincrement())
-  name      String
+  id   Int    @id @default(autoincrement())
+  name String
 
-  adminId   Int
-  Admin     Admin @relation(fields:[adminId], references: [id])
+  adminId Int
+  Admin   Admin @relation(fields: [adminId], references: [id])
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime?  @updatedAt
+  updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 
-  Item  Item[]
+  Item Item[]
 }
 
 model Item {
-  id        Int      @id @default(autoincrement())
-  name      String
-  picture   String?
-  price     Int?
-  status    String?
+  id      Int     @id @default(autoincrement())
+  name    String
+  picture String?
+  price   Int?
+  status  String?
 
-  categoryId  Int
-  Category  Category  @relation(fields:[categoryId], references: [id])
+  categoryId Int
+  Category   Category @relation(fields: [categoryId], references: [id])
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime?  @updatedAt
+  updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 }
 
 model Lot {
-  id        Int      @id @default(autoincrement())
+  id        Int     @id @default(autoincrement())
   amount    Int?
   status    String?
   orders    Json
   employees Json
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime?  @updatedAt
+  updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 }
 
 model Employee {
-  id        Int      @id @default(autoincrement())
-  name  String
-  email String  @unique
-  phone String?
-  details Json?
+  id           Int     @id @default(autoincrement())
+  name         String
+  email        String  @unique
+  phone        String?
+  photoURL     String?
+  details      Json?
+  refreshToken String? @db.Text
+  publicKey    String?
+  secretKey    String?
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime?  @updatedAt
+  updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 }
 
 model Order {
-  id        Int      @id @default(autoincrement())
+  id Int @id @default(autoincrement())
 
-  lotId     Int
-  items     Json
+  lotId Int
+  items Json
 
   createdAt DateTime  @default(now())
-  updatedAt DateTime?  @updatedAt
+  updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 }
