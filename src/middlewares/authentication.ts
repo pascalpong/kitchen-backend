@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from "express";
 import * as jwt from "jsonwebtoken";
 import { RequestWithUser } from "../models";
-import { Admin, Employee, PrismaClient } from "@prisma/client";
+import { User, PrismaClient } from "@prisma/client";
 import { generateAccessToken } from "../utils/tokens";
 
 const prisma = new PrismaClient();
@@ -32,12 +32,12 @@ export const refreshToken = async (req: RequestWithUser, res: Response, next: Ne
         if (!token) {
             return res.status(401).json({ success: false, message: 'No token provided' });
         }
-        const falseDecode = jwt.decode(token) as Admin | Employee | null;
+        const falseDecode = jwt.decode(token) as User | null;
         if (!falseDecode) {
             return res.status(401).json({ success: false, message: 'Failed to decode token' });
         }
         const { id, email, publicKey } = falseDecode;
-        const findUser = await prisma.admin.findUnique({
+        const findUser = await prisma.user.findUnique({
             where: { id, email, publicKey }
         });
         if (!findUser) {
@@ -45,7 +45,7 @@ export const refreshToken = async (req: RequestWithUser, res: Response, next: Ne
         }
         try {
             const refreshToken = findUser.refreshToken;
-            const decoded = jwt.verify(refreshToken, publicKey + refreshSecret) as Admin | Employee;
+            const decoded = jwt.verify(refreshToken, publicKey + refreshSecret) as User;
             const newAccessToken = await generateAccessToken(decoded);
             req.accessToken = newAccessToken;
             req.verifyUser = decoded;
@@ -56,6 +56,6 @@ export const refreshToken = async (req: RequestWithUser, res: Response, next: Ne
         }
     } catch (error) {
         console.log(error)
-        return res.status(401).json({ success: false, message: 'Invalid token.dddd' });
+        return res.status(401).json({ success: false, message: 'Invalid token.' });
     }
 }

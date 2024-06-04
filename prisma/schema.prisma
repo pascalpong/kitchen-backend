@@ -13,10 +13,12 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Admin {
+model User {
   id           Int     @id @default(autoincrement())
   name         String
   email        String  @unique
+  type         String?
+  status       String?
   phone        String?
   photoURL     String?
   details      Json?
@@ -35,8 +37,8 @@ model Category {
   id   Int    @id @default(autoincrement())
   name String
 
-  adminId Int
-  Admin   Admin @relation(fields: [adminId], references: [id])
+  userId Int
+  User   User @relation(fields: [userId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -65,28 +67,13 @@ model Lot {
   amount    Int?
   status    String?
   orders    Json
-  employees Json
+  Users Json
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 }
 
-model Employee {
-  id           Int     @id @default(autoincrement())
-  name         String
-  email        String  @unique
-  phone        String?
-  photoURL     String?
-  details      Json?
-  refreshToken String? @db.Text
-  publicKey    String?
-  secretKey    String?
-
-  createdAt DateTime  @default(now())
-  updatedAt DateTime? @updatedAt
-  deletedAt DateTime?
-}
 
 model Order {
   id Int @id @default(autoincrement())

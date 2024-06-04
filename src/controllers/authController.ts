@@ -1,4 +1,4 @@
-import { Admin, Employee, PrismaClient } from '@prisma/client';
+import { User, PrismaClient } from '@prisma/client';
 import { Request, Response } from "express"; 
 import { RequestWithUser, googleAuthGeneral } from '../models';
 import { generateKey } from '../utils/generateKeys';
@@ -21,7 +21,7 @@ export const googleAuth = async (req: Request, res: Response) => {
         const { uid, email, displayName, photoURL, providerData, phoneNumber }: googleAuthGeneral = req.body;
         let user: any
         let data: any
-        user = await prisma.admin.findUnique({
+        user = await prisma.user.findUnique({
             where: {
                 email
             }
@@ -39,10 +39,10 @@ export const googleAuth = async (req: Request, res: Response) => {
     }
 }
 
-const updateTokens = async (user: Admin|Employee) => {
+const updateTokens = async (user: User) => {
     try {
         const tokens = await getTokens(user)
-        const updatedUser = await prisma.admin.update({
+        const updatedUser = await prisma.user.update({
             where: {
                 email: user.email,
             },
@@ -60,7 +60,7 @@ const updateTokens = async (user: Admin|Employee) => {
 const register = async (data: googleAuthGeneral) => {
     try {
         const { uid, email, displayName, photoURL, providerData, phoneNumber } = data;
-        const user = await prisma.admin.create({
+        const user = await prisma.user.create({
             data: {
                 name: displayName,
                 email,
@@ -77,7 +77,7 @@ const register = async (data: googleAuthGeneral) => {
     }
 }
 
-const getTokens = async (user: Admin|Employee) => {
+const getTokens = async (user: User) => {
 
     const accessToken = await generateAccessToken(user);
     const refreshToken = await generateRefreshToken(user)
