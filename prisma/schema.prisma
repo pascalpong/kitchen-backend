@@ -26,11 +26,15 @@ model User {
   publicKey    String?
   secretKey    String?
 
+  adminId Int?
+  User    User? @relation("Admin", fields: [adminId], references: [id])
+
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 
   Category Category[]
+  Admin    User[]     @relation("Admin")
 }
 
 model Category {
@@ -63,17 +67,16 @@ model Item {
 }
 
 model Lot {
-  id        Int     @id @default(autoincrement())
-  amount    Int?
-  status    String?
-  orders    Json
-  Users Json
+  id     Int     @id @default(autoincrement())
+  amount Int?
+  status String?
+  orders Json
+  Users  Json
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
 }
-
 
 model Order {
   id Int @id @default(autoincrement())
