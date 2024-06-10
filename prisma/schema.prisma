@@ -34,6 +34,7 @@ model User {
   deletedAt DateTime?
 
   Category Category[]
+  Bill  Bill[]
   Admin    User[]     @relation("Admin")
 }
 
@@ -68,21 +69,38 @@ model Item {
 
 model Lot {
   id     Int     @id @default(autoincrement())
+  name    String
   amount Int?
   status String?
-  orders Json
-  Users  Json
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
   deletedAt DateTime?
+
+  Bill  Bill[]
+}
+
+model Bill {
+  id     Int     @id @default(autoincrement())
+  orders Json
+  status String?
+  people  Int
+
+  userId  Int
+  User    User @relation(fields: [userId], references: [id])
+  lotId   Int
+  Lot   Lot @relation(fields: [lotId], references: [id])
+
+  Order Order[]
 }
 
 model Order {
   id Int @id @default(autoincrement())
-
-  lotId Int
+  orderedBy String
+  status  String
   items Json
+  billId Int
+  Bill   Bill @relation(fields: [billId], references: [id])
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
