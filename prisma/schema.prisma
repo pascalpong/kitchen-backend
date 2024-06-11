@@ -69,7 +69,7 @@ model Item {
 
 model Lot {
   id     Int     @id @default(autoincrement())
-  name    String
+  name   String
   amount Int?
   status String?
 

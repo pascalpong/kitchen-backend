@@ -1,12 +1,13 @@
 import * as express from 'express';
 import { verifyToken } from '../middlewares/authentication';
-import { assignUserType, deleteUsers, getUsers, updateUsers } from '../controllers/userController';
+import { createLots, deleteLot, getLots, updateLotStatus } from '../controllers/lotController';
+
 
 const router = express.Router();
 
-router.get('/', verifyToken, getUsers);
-router.patch('/assign', verifyToken, assignUserType);
-router.patch('/update', verifyToken, updateUsers);
-router.delete('/delete', verifyToken, deleteUsers);
+router.get('/', verifyToken, getLots);
+router.post('/create', verifyToken, createLots);
+router.patch('/update/status', verifyToken, updateLotStatus);
+router.delete('/delete', verifyToken, deleteLot);
 
 export default router;
