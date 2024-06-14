@@ -70,8 +70,10 @@ model Item {
 model Lot {
   id     Int     @id @default(autoincrement())
   name   String
+  code   String
   amount Int?
   status String?
+  qrcode  String?
 
   createdAt DateTime  @default(now())
   updatedAt DateTime? @updatedAt
@@ -82,15 +84,19 @@ model Lot {
 
 model Bill {
   id     Int     @id @default(autoincrement())
-  orders Json
+  code    String
   status String?
-  people  Int
+  people  Int?
 
   userId  Int
   User    User @relation(fields: [userId], references: [id])
   lotId   Int
   Lot   Lot @relation(fields: [lotId], references: [id])
 
+  createdAt DateTime  @default(now())
+  updatedAt DateTime? @updatedAt
+  deletedAt DateTime?
+  
   Order Order[]
 }
 

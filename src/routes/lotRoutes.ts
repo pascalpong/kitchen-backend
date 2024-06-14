@@ -6,6 +6,7 @@ import { createLots, deleteLot, getLots, updateLotStatus } from '../controllers/
 const router = express.Router();
 
 router.get('/', verifyToken, getLots);
+router.get('/:id', verifyToken, getLots);
 router.post('/create', verifyToken, createLots);
 router.patch('/update/status', verifyToken, updateLotStatus);
 router.delete('/delete', verifyToken, deleteLot);
