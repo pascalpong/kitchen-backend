@@ -6,7 +6,7 @@ import { createBill, getBills, getOpenBillByLotCode } from '../controllers/billC
 const router = express.Router();
 
 router.get('/', verifyToken, getBills);
-router.get('/lotCode/:code', verifyToken, getOpenBillByLotCode);
+router.get('/lotCode/:code', getOpenBillByLotCode);
 router.post('/create', verifyToken, createBill);
 
 export default router;
