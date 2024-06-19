@@ -2,6 +2,7 @@ import * as express from 'express';
 import * as dotenv from 'dotenv';
 import * as path from 'path';
 import * as cors from 'cors';
+import * as bodyParser from 'body-parser';
 
 // Load environment variables from .env file
 dotenv.config();
@@ -14,6 +15,8 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
+app.use(bodyParser.json({ limit: '10mb' }));
+app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
 // Routes
 // Import your route files here
 import indexRouter from './routes/index';

@@ -21,11 +21,17 @@ export const getItems = async (req: Request, res: Response) => {
 
 export const createItems = async (req: Request, res: Response) => {
     try {
-        console.log(req.body)
-        const { items: data } = req.body;
-        console.log(req.body)
-        const items = await prisma.item.createMany({ data })
-        return res.status(200).json({ success: true, data: items})
+        const { items: itemlist } = req.body
+        const items = itemlist.map((item: any, index: number) => {
+            
+            console.log(req.files)
+
+            // const image = req.files[index] ? req.files[index].path : null;
+            // return { ...item, image };
+        });
+        console.log(items)
+        // const savedItems = await prisma.item.createMany({ data: items })
+        // return res.status(200).json({ success: true, data: savedItems})
     } catch (error) {
         console.log(error);
         return res.status(500).json({ success: false, message: 'Internal Server Error', error: error.message });
