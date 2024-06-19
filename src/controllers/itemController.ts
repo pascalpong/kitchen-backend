@@ -4,7 +4,7 @@ const prisma = new PrismaClient
 
 
 export const getItems = async (req: Request, res: Response) => {
-    try { 
+    try {
         let where = {
             deletedAt: null
         }
@@ -21,6 +21,7 @@ export const getItems = async (req: Request, res: Response) => {
 
 export const createItems = async (req: Request, res: Response) => {
     try {
+        console.log(req.body)
         const { items: data } = req.body;
         console.log(req.body)
         const items = await prisma.item.createMany({ data })
@@ -31,7 +32,7 @@ export const createItems = async (req: Request, res: Response) => {
     }
 }
 export const updateItems = (req: Request, res: Response) => {
-    try { 
+    try {
 
     } catch (error) {
         console.log(error);
@@ -39,7 +40,7 @@ export const updateItems = (req: Request, res: Response) => {
     }
 }
 export const deleteItems = (req: Request, res: Response) => {
-    try { 
+    try {
 
     } catch (error) {
         console.log(error);
