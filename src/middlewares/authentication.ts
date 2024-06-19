@@ -16,11 +16,12 @@ export const verifyToken = async (req: RequestWithUser, res: Response, next: Nex
         return res.status(401).json({ success: false, message: 'Access denied. No token provided.' });
     }
     try {
-        const decoded = jwt.verify(token, publicKey + accessSecret);
+        const decoded = jwt.verify(token, publicKey + accessSecret); 
         req.accessToken = token;
         req.verifyUser = decoded;
         next();
     } catch (error) {
+        console.log(error)
         return res.status(401).json({ success: false, message: 'Invalid token.' });
     }
 };

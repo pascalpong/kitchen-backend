@@ -22,6 +22,7 @@ export const getItems = async (req: Request, res: Response) => {
 export const createItems = async (req: Request, res: Response) => {
     try {
         const { items: data } = req.body;
+        console.log(req.body)
         const items = await prisma.item.createMany({ data })
         return res.status(200).json({ success: true, data: items})
     } catch (error) {
