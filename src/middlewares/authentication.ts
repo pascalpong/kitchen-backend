@@ -21,11 +21,13 @@ export const verifyToken = async (req: RequestWithUser, res: Response, next: Nex
         req.verifyUser = decoded;
         next();
     } catch (error) {
+        if (error.name === 'TokenExpiredError') {
+            return refreshToken(req, res, next);
+        }
         console.log(error)
         return res.status(401).json({ success: false, message: 'Invalid token.' });
     }
 };
-
 
 export const refreshToken = async (req: RequestWithUser, res: Response, next: NextFunction) => {
     try {

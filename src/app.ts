@@ -15,8 +15,12 @@ app.use(cors())
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.use(bodyParser.json({ limit: '10mb' }));
-app.use(bodyParser.urlencoded({ limit: '10mb', extended: true }))
+// Increase the limit for JSON payloads
+app.use(bodyParser.json({ limit: '50mb' }));
+
+// Increase the limit for URL-encoded payloads
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
+
 // Routes
 // Import your route files here
 import indexRouter from './routes/index';

@@ -53,11 +53,11 @@ model Category {
 }
 
 model Item {
-  id      Int     @id @default(autoincrement())
-  name    String
-  picture String?
-  price   Int?
-  status  String?
+  id        Int      @id @default(autoincrement())
+  name      String
+  price     Int?
+  status    String?
+  image     String?
 
   categoryId Int
   Category   Category @relation(fields: [categoryId], references: [id])
